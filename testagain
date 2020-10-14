@@ -1,0 +1,13 @@
+import requests
+
+url = "https://api.twitter.com/2/tweets/1315589247173156864?tweet.fields=created_at,attachments&expansions=author_id"
+
+payload = {}
+headers = {
+  'Authorization': 'OAuth oauth_consumer_key="vKTCBbmEzNX7lX8ZszQ2jCepG",oauth_token="1247527721921462279-RPJ3km5QL6r4UsMZsnzpn7X3TWRsbB",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1602647155",oauth_nonce="XVgUNF3zznQ",oauth_version="1.0",oauth_signature="7Ot0XDpM7%2F8pn9jTQp280xsGehI%3D"',
+  'Cookie': 'personalization_id="v1_XYmm2T35VOlsH5DEGVBMjw=="; guest_id=v1%3A160264679988014682'
+}
+
+response = requests.request("GET", url, headers=headers, data = payload)
+
+print(response.text.encode('utf8'))
