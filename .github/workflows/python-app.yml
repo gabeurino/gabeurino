@@ -1,0 +1,49 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        pytest
+        
+        import http.client
+import mimetypes
+conn = http.client.HTTPSConnection("api.twitter.com")
+payload = ''
+headers = {
+  'Authorization': 'OAuth oauth_consumer_key="vKTCBbmEzNX7lX8ZszQ2jCepG",oauth_token="1247527721921462279-RPJ3km5QL6r4UsMZsnzpn7X3TWRsbB",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1602647155",oauth_nonce="XVgUNF3zznQ",oauth_version="1.0",oauth_signature="7Ot0XDpM7%2F8pn9jTQp280xsGehI%3D"',
+  'Cookie': 'personalization_id="v1_XYmm2T35VOlsH5DEGVBMjw=="; guest_id=v1%3A160264679988014682'
+}
+conn.request("GET", "/2/tweets/1315589247173156864?tweet.fields=created_at,attachments&expansions=author_id", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
